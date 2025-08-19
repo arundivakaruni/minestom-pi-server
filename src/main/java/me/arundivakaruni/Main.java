@@ -1,3 +1,6 @@
+package me.arundivakaruni;
+
+import me.arundivakaruni.commands.SetHealthCommand;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
@@ -9,8 +12,6 @@ import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PickupItemEvent;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.event.player.PlayerStartSneakingEvent;
-import net.minestom.server.event.trait.BlockEvent;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.block.Block;
@@ -75,6 +76,8 @@ public class Main {
         allNode.addChild(playerNode);
 
         globalEventHandler.addChild(allNode);
+
+        MinecraftServer.getCommandManager().register(new SetHealthCommand());
 
         //Enables online mode, skins, etc
         MojangAuth.init();
