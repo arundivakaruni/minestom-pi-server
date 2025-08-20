@@ -3,7 +3,7 @@ plugins {
     id("com.gradleup.shadow") version "8.3.0"
 }
 
-group = "uk.ac.swansea.cs135.labs"
+group = "com.github.arundivakaruni.minestompiserver"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -25,7 +25,7 @@ java {
 tasks {
     jar {
         manifest {
-            attributes["Main-Class"] = "uk.ac.swansea.cs135.labs.MAIN"
+            attributes["Main-Class"] = "me.arundivakaruni.Main"
         }
     }
 
