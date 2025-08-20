@@ -1,7 +1,9 @@
 package me.arundivakaruni;
 
 import me.arundivakaruni.commands.SetHealthCommand;
+import me.arundivakaruni.commands.SpawnCommand;
 import me.arundivakaruni.commands.WeaponsCommand;
+
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.ItemEntity;
 import net.minestom.server.entity.Player;
@@ -15,7 +17,6 @@ import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.*;
-import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
@@ -80,18 +81,17 @@ public class Main {
 
         globalEventHandler.addChild(allNode);
 
-        //Initializing the commands classes
+        //Registering the commands classes
         MinecraftServer.getCommandManager().register(new SetHealthCommand());
         MinecraftServer.getCommandManager().register(new WeaponsCommand());
+        MinecraftServer.getCommandManager().register(new SpawnCommand());
 
         //To save the world after disconnection
         var scheduler = MinecraftServer.getSchedulerManager();
-        scheduler.buildShutdownTask(() -> {
-            instanceManager.getInstances().forEach(Instance::saveChunksToStorage);
-        });
+        scheduler.buildShutdownTask(() -> instanceManager.getInstances().forEach(Instance::saveChunksToStorage));
 
         //Repeatedly saving the world
-        var task = scheduler.buildTask(() -> {
+        scheduler.buildTask(() -> {
                     System.out.println("Saving all instances...");
             instanceManager.getInstances().forEach(Instance::saveChunksToStorage);
         })
